@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rastgele Sayı Tahmin Oyunu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Rastgele Sayı Tahmin Oyunu</h1>
+  <button onclick="startGame()">Oyuna Başla</button>
+  <br>
+  <label id="guessLabel"></label>
+  <input type="number" id="guess" name="guess" min="1" max="100" required>
+  <button onclick="checkGuess()">Tahmin Yap</button>
+  <br>
+  <label id="resultLabel"></label>
+  <hr>
+  
+  <script>
+    let randomNum;
+    let numGuesses = 0;
+
+    function startGame() {
+      randomNum = Math.floor(Math.random() * 100) + 1;
+      numGuesses = 0;
+      document.getElementById("resultLabel").textContent = "";
+      document.getElementById("guessLabel").textContent = "1. tahmini girin:";
+    }
+
+    function checkGuess() {
+      const guessInput = document.getElementById("guess");
+      const guess = parseInt(guessInput.value);
+
+      if (isNaN(guess)) {
+        alert("Lütfen bir sayı girin.");
+        return;
+      }
+
+      numGuesses++;
+
+      if (guess === randomNum) {
+        document.getElementById("resultLabel").textContent = "Sayı " + numGuesses + " adet denemede bulundu.";
+      } else if (numGuesses >= 7) {
+        document.getElementById("resultLabel").textContent = "Deneme hakkınız kalmadı. Kaybettiniz. Doğru sayı: " + randomNum;
+      } else {
+        document.getElementById("guessLabel").textContent = (numGuesses + 1) + ". tahmini girin:";
+        if (guess < randomNum) {
+          document.getElementById("resultLabel").textContent = "Daha büyük bir sayı girin.";
+        } else {
+          document.getElementById("resultLabel").textContent = "Daha küçük bir sayı girin.";
+        }
+      }
+
+      guessInput.value = ""; // Tahmin inputunu temizle
+    }
+  </script>
+</body>
+</html>
